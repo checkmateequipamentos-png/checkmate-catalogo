@@ -296,8 +296,7 @@ function imgFail(img){
   if(img && img.parentNode) img.parentNode.replaceChild(ph, img);
 }
 function currentImg(p, s){
-  if(s.color && p.imgsByColor && p.imgsByColor[s.color]) return p.imgsByColor[s.color];
-  return p.img || '';
+   return p.img || '';
 }
 function imgHTML(p, s){
   const src = currentImg(p, s);
