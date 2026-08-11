@@ -379,8 +379,8 @@ $('grid').addEventListener('click', e => {
   if(t.dataset.type === 'color'){ state[i].color = t.dataset.val; }
   else if(t.dataset.type === 'size'){ state[i].size = t.dataset.val; }
   else if(t.classList.contains('order-btn')){ orderProduct(i); return; }
-  const cards = $('grid').querySelectorAll('.card');
-  if(cards[i] && t.dataset.type) cards[i].outerHTML = cardHTML(i);
+  const card = t.closest('.card');
+    if(card && t.dataset.type) card.outerHTML = cardHTML(i);
 });
 function orderProduct(i){
   const p = PRODUCTS[i], s = state[i];
