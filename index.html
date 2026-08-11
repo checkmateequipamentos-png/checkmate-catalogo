@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkmate Equipamentos — Catálogo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e30613;--red-dark:#b0040f;--black:#0b0b0c;--panel:#161618;--panel2:#1e1e21;--border:#27272b;--text:#f2f2f3;--muted:#9a9aa0;--gold:#f2c14e}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--black);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5}
+h1,h2,h3,.brand-name{font-family:'Oswald',sans-serif}
+a{color:inherit;text-decoration:none}
+header{position:sticky;top:0;z-index:50;background:rgba(11,11,12,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.header-inner{max-width:1200px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:52px;width:auto}
+.brand-name{font-size:26px;letter-spacing:2px;color:#fff;line-height:1}
+.brand-name b{color:var(--red)}
+.brand-sub{font-size:11px;letter-spacing:5px;color:var(--muted);text-transform:uppercase}
+.header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.whats-top{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:10px;font-size:13px;display:flex;align-items:center;gap:8px}
+.whats-top b{color:#25d366}
+.share-btn{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:10px;cursor:pointer;font-size:13px}
+.share-btn:hover{border-color:var(--red);color:#fff}
+.hero{background:radial-gradient(ellipse at 20% 0%,rgba(227,6,19,.35),transparent 55%),radial-gradient(ellipse at 90% 100%,rgba(227,6,19,.18),transparent 50%),var(--black);border-bottom:3px solid var(--red)}
+.hero-inner{max-width:1200px;margin:0 auto;padding:56px 20px 44px}
+.hero h1{font-size:clamp(30px,5vw,52px);text-transform:uppercase;letter-spacing:1px}
+.hero h1 span{color:var(--red)}
+.hero p{color:var(--muted);max-width:640px;margin-top:10px;font-size:16px}
+.container{max-width:1200px;margin:0 auto;padding:28px 20px 60px}
+.toolbar{position:sticky;top:74px;z-index:40;background:rgba(11,11,12,.95);backdrop-filter:blur(8px);padding:12px 0;margin-bottom:22px;border-bottom:1px solid var(--border)}
+.toolbar-inner{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{background:var(--panel);border:1px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600}
+.filters button.active{background:var(--red);border-color:var(--red);color:#fff}
+.filters button.promo-btn{border-color:var(--gold);color:var(--gold)}
+.filters button.promo-btn.active{background:var(--gold);color:#000;border-color:var(--gold)}
+#search{background:var(--panel);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:10px;font-size:14px;min-width:220px}
+#search:focus{outline:none;border-color:var(--red)}
+.status-bar{background:var(--panel2);border:1px solid var(--border);color:var(--muted);padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:18px;display:none}
+.status-bar.ok{border-color:rgba(61,220,132,.4);color:#7dffa8}
+.status-bar.warn{border-color:rgba(227,6,19,.4);color:#ffb3b7}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-3px);border-color:var(--red)}
+.card-img{position:relative;aspect-ratio:1/1;background:var(--panel2);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover}
+.placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);text-align:center;padding:10px;font-size:12px}
+.placeholder svg{width:56px;height:56px;opacity:.5}
+.badge{position:absolute;top:10px;left:10px;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px}
+.card-body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card-cat{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);font-weight:700}
+.card-title{font-size:16px;font-weight:700}
+.card-desc{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.price-row{display:flex;align-items:baseline;gap:8px;margin-top:2px}
+.price{font-size:20px;font-weight:700;color:#fff}
+.price-old{font-size:13px;color:var(--muted);text-decoration:line-through}
+.vars{display:flex;flex-direction:column;gap:6px}
+.vars .vlabel{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:5px 11px;border-radius:7px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.chip .dot{width:11px;height:11px;border-radius:50%;border:1px solid rgba(255,255,255,.3);display:inline-block}
+.chip.selected{background:var(--red);border-color:var(--red);color:#fff}
+.buy-row{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:6px}
+.qty{display:flex;align-items:center;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.qty button{width:30px;height:36px;background:var(--panel2);border:none;color:#fff;font-size:16px;cursor:pointer}
+.qty span{width:34px;text-align:center;font-weight:700;font-size:14px}
+.order-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--red),var(--red-dark));border:none;color:#fff;font-weight:700;font-size:14px;padding:10px;border-radius:9px;cursor:pointer;font-family:'Inter',sans-serif}
+.order-btn:hover{filter:brightness(1.12)}
+.order-btn svg{width:18px;height:18px}
+footer{background:#080809;border-top:1px solid var(--border);padding:44px 20px 24px;margin-top:20px}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px}
+footer h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:2px;font-size:15px;margin-bottom:12px;color:var(--red)}
+footer p,footer a{color:var(--muted);font-size:13px;display:block;margin-bottom:6px}
+footer a:hover{color:#fff}
+.footer-bottom{max-width:1200px;margin:26px auto 0;border-top:1px solid var(--border);padding-top:16px;color:#6a6a70;font-size:12px;text-align:center}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#fff;color:#111;padding:12px 20px;border-radius:10px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:all .25s;z-index:100;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:520px){.brand img{height:40px}.brand-name{font-size:20px}.toolbar{top:64px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <img id="logo" src="logo.png" alt="Checkmate Equipamentos" onerror="this.style.display='none'">
+      <div class="brand-text">
+        <div class="brand-name">CHECK<b>MATE</b></div>
+        <div class="brand-sub">Equipamentos</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="whats-top">📱 Pedidos: <b id="whatsLabel">67 9935-39729</b></div>
+      <button class="share-btn" onclick="shareCatalog()">🔗 Compartilhar</button>
+    </div>
+  </div>
+</header>
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Equipamentos de <span>Luta</span><br>com preço justo</h1>
+    <p>Luvas, caneleiras, bandagens, protetores e muito mais. Escolha o produto, selecione a cor e o tamanho e peça direto pelo WhatsApp — entrega em Campo Grande/MS e envio para todo o Brasil.</p>
+  </div>
+</section>
+<main class="container">
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <div class="filters" id="filters"></div>
+      <input id="search" type="search" placeholder="🔍 Buscar produto...">
+    </div>
+  </div>
+  <div class="status-bar" id="statusBar"></div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <h4>Checkmate Equipamentos</h4>
+      <p>Equipamentos de luta com qualidade e preço justo desde 2019. Atendemos todas as equipes de Campo Grande e região.</p>
+      <p>🏆 Presente nos melhores eventos de Muay Thai de MS</p>
+    </div>
+    <div>
+      <h4>Contato</h4>
+      <a href="https://wa.me/5567993539729" target="_blank">📱 WhatsApp: 67 9935-39729</a>
+      <a href="mailto:checkmateequipamentos@gmail.com">✉️ checkmateequipamentos@gmail.com</a>
+      <p>📍 Av. José Nogueira Vieira, 430 — Tiradentes, Campo Grande/MS</p>
+    </div>
+    <div>
+      <h4>Pagamento e Entrega</h4>
+      <p>💳 Pagamento: PIX e link de pagamento</p>
+      <p>🛵 Entrega em domicílio e retirada na loja</p>
+      <p>📦 Moto entregador em Campo Grande e Correios para demais localidades (valores a confirmar)</p>
+    </div>
+    <div>
+      <h4>Redes Sociais</h4>
+      <a href="https://www.instagram.com/checkmate_muaythai/" target="_blank">📸 Instagram: @checkmate_muaythai</a>
+      <a href="https://www.facebook.com/checkmatemuaythai" target="_blank">👍 Facebook: Checkmate Muaythai</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Checkmate Equipamentos · CNPJ 33.523.288/0001-38 · Todos os direitos reservados</div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+const WHATSAPP_LOJA = { num: '5567993539729', label: '67 9935-39729' };
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQZ9dBmj5r1z4DrFYVdTsk9iN7PvmKFQ_Y7yrV-Gt0BWGdSQFfllQ_OcdqrAbXgYmsz7YzTPw961hgs/pub?gid=0&single=true&output=csv';
+const FALLBACK_PRODUCTS = [
+  {cat:'Luvas', title:'Luva Adidas Hybrid 80', desc:'Luva de boxe e muay thai com ótimo ajuste e amortecimento.', price:249, oldPrice:279, img:'', colors:['Preta','Azul'], sizes:['10oz','12oz','14oz','16oz']},
+  {cat:'Luvas', title:'Luva Adidas Hybrid 25', desc:'Modelo híbrido versátil para treinos intensos.', price:250, oldPrice:0, img:'', colors:['Azul/Preta','Amarelo/Preta'], sizes:['10oz','12oz','14oz','16oz']},
+  {cat:'Luvas', title:'Luva Adidas Power 100', desc:'Resistência e conforto para treino pesado.', price:220, oldPrice:0, img:'', colors:['Preto','Amarelo Limão'], sizes:['10oz','12oz','14oz','16oz']},
+  {cat:'Luvas', title:'Luva Adidas Tilt 150', desc:'Luva premium com excelente proteção e acabamento.', price:270, oldPrice:310, img:'', colors:['Vermelha','Azul','Cinza','Preta'], sizes:['10oz','12oz','14oz','16oz']},
+  {cat:'Luvas', title:'Luva Maximum Classic', desc:'Clássica e durável, ideal para todos os treinos.', price:265, oldPrice:0, img:'', colors:['Preta','Vermelha'], sizes:['10oz','12oz','14oz','16oz']},
+  {cat:'Luvas', title:'Luva Maximum Action Branca', desc:'Leve e confortável para treinos e sparring.', price:210, oldPrice:235, img:'', colors:['Branca'], sizes:['10oz','12oz','14oz','16oz']},
+  {cat:'Luvas', title:'Luva de Boxe Infantil Desenhos Preta', desc:'Para os pequenos lutadores começarem com segurança.', price:210, oldPrice:0, img:'', colors:['Preta'], sizes:['Infantil']},
+  {cat:'Luvas', title:'Luva de Boxe Infantil Pow Branca e Rosa', desc:'Luva infantil colorida, resistente e confortável.', price:210, oldPrice:0, img:'', colors:['Branca e Rosa'], sizes:['Infantil']},
+  {cat:'Luvas', title:'Luva de Boxe Infantil Pow Preto e Rosa', desc:'Luva infantil com visual marcante.', price:210, oldPrice:0, img:'', colors:['Preto e Rosa'], sizes:['Infantil']},
+  {cat:'Luvas', title:'Luva de Boxe Infantil Pow Vermelha e Azul', desc:'Luva infantil para treinos divertidos e seguros.', price:210, oldPrice:0, img:'', colors:['Vermelha e Azul'], sizes:['Infantil']},
+  {cat:'Caneleiras', title:'Caneleira Impact Pretorian', desc:'Proteção premium para shin e treinos de impacto.', price:430, oldPrice:0, img:'', colors:['Preta'], sizes:['M','G']},
+  {cat:'Caneleiras', title:'Caneleira Maximum White', desc:'Caneleira resistente com excelente absorção de impacto.', price:330, oldPrice:0, img:'', colors:['Branca'], sizes:['M','G']},
+  {cat:'Bandagens', title:'Bandagem Maximum 3m', desc:'Bandagem de alta qualidade, cores diversas.', price:45, oldPrice:0, img:'', colors:['Cores diversas'], sizes:['3m']},
+  {cat:'Bandagens', title:'Bandagem Maximum 5m', desc:'Mais proteção e firmeza para as mãos.', price:60, oldPrice:0, img:'', colors:['Cores diversas'], sizes:['5m']},
+  {cat:'Bandagens', title:'Bandagem Title 3m', desc:'Bandagem tradicional de excelente custo-benefício.', price:38, oldPrice:0, img:'', colors:['Preta'], sizes:['3m']},
+  {cat:'Equipamentos', title:'Aparador de Chute Maximum', desc:'Aparador resistente para treino de chutes com parceiro.', price:490, oldPrice:0, img:'', colors:['Padrão'], sizes:['Padrão']},
+  {cat:'Acessórios', title:'Anti Odor Checkmate', desc:'Sachê anti odor para manter seus equipamentos frescos.', price:45, oldPrice:0, img:'', colors:['Padrão'], sizes:['Padrão']},
+  {cat:'Acessórios', title:'Bolsa Treino Naja — Batman Movie', desc:'Bolsa espaçosa para carregar todo o material de treino.', price:80, oldPrice:129.9, img:'', colors:['Padrão'], sizes:['Padrão']},
+  {cat:'Kits', title:'Conjunto Pretorian Elite + Bandagem', desc:'Kit completo com caneleira elite e bandagem inclusa.', price:290, oldPrice:0, img:'', colors:['Preta'], sizes:['Padrão']},
+  {cat:'Kits', title:'Kit Boxe e Muay Thai Naja Extreme', desc:'Luva + bandagem + protetor bucal em um kit completo.', price:250, oldPrice:0, img:'', colors:['Padrão'], sizes:['Padrão']}
+];
+let PRODUCTS = [];
+let state = [];
+let filterCat = 'Todos';
+let promoOnly = false;
+let ACTIVE_WP = WHATSAPP_LOJA;
+const fmt = v => v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+const $ = id => document.getElementById(id);
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function toast(msg){
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600);
+}
+function setStatus(msg, type){
+  const el = $('statusBar');
+  el.textContent = msg;
+  el.className = 'status-bar ' + (type || '');
+  el.style.display = 'block';
+}
+function shareCatalog(){
+  const url = location.href;
+  if(navigator.share){ navigator.share({title:'Checkmate Equipamentos', text:'Veja nosso catálogo!', url}); }
+  else if(navigator.clipboard){ navigator.clipboard.writeText(url); toast('Link copiado! Envie para seus clientes.'); }
+  else { prompt('Copie o link do catálogo:', url); }
+}
+function fixSheetUrl(url){
+  if(!url) return '';
+  url = url.trim();
+  if(url.includes('output=csv') || url.includes('export?format=csv')) return url;
+  try{
+    const u = new URL(url);
+    const gid = u.searchParams.get('gid') || '0';
+    const m = u.pathname.match(/\/spreadsheets\/d\/([^/]+)/);
+    if(m){ return 'https://docs.google.com/spreadsheets/d/' + m[1] + '/export?format=csv&gid=' + gid; }
+    const idx = u.pathname.indexOf('/pub');
+    if(idx !== -1){
+      const base = u.pathname.substring(0, idx);
+      return u.origin + base + '/pub?output=csv&gid=' + gid;
+    }
+  }catch(e){}
+  return url;
+}
+function parseCSV(text){
+  const rows = []; let row = [], cur = '', inQ = false;
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(inQ){
+      if(c === '"'){ if(text[i+1] === '"'){ cur += '"'; i++; } else inQ = false; }
+      else cur += c;
+    } else {
+      if(c === '"') inQ = true;
+      else if(c === ','){ row.push(cur); cur = ''; }
+      else if(c === '\n' || c === '\r'){
+        if(c === '\r' && text[i+1] === '\n') i++;
+        row.push(cur); cur = '';
+        if(row.join('').trim()) rows.push(row);
+        row = [];
+      } else cur += c;
+    }
+  }
+  row.push(cur); if(row.join('').trim()) rows.push(row);
+  return rows;
+}
+function parsePrice(s){
+  if(!s) return 0;
+  let v = s.replace(/R\$/g,'').replace(/\s/g,'').replace(/\./g,'').replace(',','.');
+  return parseFloat(v) || 0;
+}
+function looksLikeCode(t){
+  if(!t) return true;
+  return /var |function |=>|\.split\(|window\.|document\.|this\|\||\{\}/i.test(t);
+}
+function splitList(s){
+  return (s||'').split(',').map(x => x.trim()).filter(Boolean);
+}
+function rowToProduct(r){
+  const colors = splitList(r[6]);
+  const sizes = splitList(r[7]);
+  const colorImgs = splitList(r[8]);
+  const imgsByColor = {};
+  colors.forEach((c, idx) => { if(colorImgs[idx]) imgsByColor[c] = colorImgs[idx]; });
+  let isActive = true;
+  for(let i = r.length - 1; i >= 0; i--){
+    const val = (r[i] || '').trim().toLowerCase();
+    if(val === 'sim' || val === 's' || val === 'true' || val === '1'){ isActive = true; break; }
+    if(val === 'não' || val === 'nao' || val === 'n' || val === 'false' || val === '0'){ isActive = false; break; }
+  }
+  return {
+    cat: (r[0]||'').trim(), title: (r[1]||'').trim(), desc: (r[2]||'').trim(),
+    price: parsePrice(r[3]), oldPrice: parsePrice(r[4]),
+    img: (r[5]||'').trim(), colors, sizes, imgsByColor, active: isActive
+  };
+}
+async function fetchWithTimeout(url, ms){
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms);
+  try{ return await fetch(url, { signal: ctrl.signal }); }
+  finally { clearTimeout(timer); }
+}
+window.addEventListener('error', function(ev){
+  try{ setStatus('⚠️ Erro no site: ' + (ev.message || 'desconhecido'), 'warn'); }catch(e){}
+});
+function renderFilters(){
+  const cats = ['Todos', ...new Set(PRODUCTS.map(p => p.cat))];
+  let html = '<button class="' + (filterCat === 'Todos' && !promoOnly ? 'active' : '') + '" data-cat="Todos">Todos</button>';
+  html += '<button class="promo-btn ' + (promoOnly ? 'active' : '') + '" data-promo="1">🔥 Promoção</button>';
+  cats.filter(c => c !== 'Todos').forEach(c => {
+    html += '<button class="' + (filterCat === c && !promoOnly ? 'active' : '') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
+  });
+  $('filters').innerHTML = html;
+}
+const SWATCH = { 'preta':'#111', 'vermelha':'#e30613', 'azul':'#2456d6', 'branca':'#f2f2f3', 'cinza':'#777', 'amarelo':'#f2c14e', 'rosa':'#ec4899' };
+function dotColor(name){
+  const n = name.toLowerCase();
+  for(const k in SWATCH){ if(n.includes(k)) return SWATCH[k]; }
+  return null;
+}
+function shieldSvg(){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5l8-3z"/></svg>';
+}
+function imgFail(img){
+  const ph = document.createElement('div');
+  ph.className = 'placeholder';
+  ph.innerHTML = shieldSvg() + '<div>Foto em breve</div>';
+  if(img && img.parentNode) img.parentNode.replaceChild(ph, img);
+}
+function currentImg(p, s){
+  if(s.color && p.imgsByColor && p.imgsByColor[s.color]) return p.imgsByColor[s.color];
+  return p.img || '';
+}
+function imgHTML(p, s){
+  const src = currentImg(p, s);
+  if(src){ return '<img src="' + esc(src) + '" alt="' + esc(p.title) + '" onerror="imgFail(this)">'; }
+  return '<div class="placeholder">' + shieldSvg() + '<div>Foto em breve</div></div>';
+}
+function cardHTML(i){
+  const p = PRODUCTS[i], s = state[i];
+  const discount = p.oldPrice > p.price ? Math.round((1 - p.price/p.oldPrice) * 100) : 0;
+  const img = imgHTML(p, s);
+  let colorChips = '';
+  if(p.colors.length && p.colors[0] !== 'Padrão'){
+    colorChips = '<div class="vars"><div class="vlabel">Cor</div><div class="chips">' + p.colors.map(c =>
+      '<button class="chip ' + (s.color === c ? 'selected' : '') + '" data-i="' + i + '" data-type="color" data-val="' + esc(c) + '">' + (dotColor(c) ? '<span class="dot" style="background:' + dotColor(c) + '"></span>' : '') + esc(c) + '</button>'
+    ).join('') + '</div></div>';
+  }
+  let sizeChips = '';
+  if(p.sizes.length && p.sizes[0] !== 'Padrão'){
+    sizeChips = '<div class="vars"><div class="vlabel">Tamanho</div><div class="chips">' + p.sizes.map(z =>
+      '<button class="chip ' + (s.size === z ? 'selected' : '') + '" data-i="' + i + '" data-type="size" data-val="' + esc(z) + '">' + esc(z) + '</button>'
+    ).join('') + '</div></div>';
+  }
+  return '' +
+    '<div class="card">' +
+      '<div class="card-img">' + img + (discount ? '<div class="badge">-' + discount + '%</div>' : '') + '</div>' +
+      '<div class="card-body">' +
+        '<div class="card-cat">' + esc(p.cat) + '</div>' +
+        '<div class="card-title">' + esc(p.title) + '</div>' +
+        '<div class="card-desc">' + esc(p.desc || '') + '</div>' +
+        '<div class="price-row">' +
+          '<span class="price">' + fmt(p.price) + '</span>' +
+          (p.oldPrice > p.price ? '<span class="price-old">' + fmt(p.oldPrice) + '</span>' : '') +
+        '</div>' +
+        colorChips + sizeChips +
+        '<div class="buy-row">' +
+          '<div class="qty">' +
+            '<button data-i="' + i + '" data-qty="-1">−</button>' +
+            '<span id="qty-' + i + '">' + s.qty + '</span>' +
+            '<button data-i="' + i + '" data-qty="1">+</button>' +
+          '</div>' +
+          '<button class="order-btn" data-i="' + i + '"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Pedir no WhatsApp</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+}
+function render(){
+  const q = ($('search').value || '').toLowerCase();
+  const list = PRODUCTS.filter(p => {
+    if(!p.active) return false;
+    const matchCat = filterCat === 'Todos' || p.cat === filterCat;
+    const matchPromo = !promoOnly || (p.oldPrice > p.price);
+    const matchSearch = !q || (p.title + ' ' + p.cat + ' ' + (p.desc||'')).toLowerCase().includes(q);
+    return matchCat && matchPromo && matchSearch;
+  });
+  $('grid').innerHTML = list.length
+    ? list.map(p => cardHTML(PRODUCTS.indexOf(p))).join('')
+    : '<div style="text-align:center;color:var(--muted);padding:40px 0">Nenhum produto encontrado.</div>';
+}
+$('filters').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  if(b.dataset.promo){
+    promoOnly = !promoOnly;
+    if(promoOnly) filterCat = 'Todos';
+  } else {
+    filterCat = b.dataset.cat;
+    promoOnly = false;
+  }
+  renderFilters(); render();
+});
+$('search').addEventListener('input', render);
+$('grid').addEventListener('click', e => {
+  const t = e.target.closest('[data-i]'); if(!t) return;
+  const i = +t.dataset.i;
+  if(t.dataset.qty){
+    state[i].qty = Math.min(99, Math.max(1, state[i].qty + (+t.dataset.qty)));
+    $('qty-' + i).textContent = state[i].qty;
+    return;
+  }
+  if(t.dataset.type === 'color'){ state[i].color = t.dataset.val; }
+  else if(t.dataset.type === 'size'){ state[i].size = t.dataset.val; }
+  else if(t.classList.contains('order-btn')){ orderProduct(i); return; }
+  const cards = $('grid').querySelectorAll('.card');
+  if(cards[i] && t.dataset.type) cards[i].outerHTML = cardHTML(i);
+});
+function orderProduct(i){
+  const p = PRODUCTS[i], s = state[i];
+  const needsColor = p.colors.length && p.colors[0] !== 'Padrão';
+  const needsSize = p.sizes.length && p.sizes[0] !== 'Padrão';
+  if(needsColor && !s.color) return toast('Selecione a cor antes de pedir 👉');
+  if(needsSize && !s.size) return toast('Selecione o tamanho antes de pedir 👉');
+  const vars = [];
+  if(s.color) vars.push('Cor: ' + s.color);
+  if(s.size) vars.push('Tamanho: ' + s.size);
+  const msg = 'Olá! Vim pelo catálogo da Checkmate 🥊\n\n' +
+    '*Produto:* ' + p.title + '\n' +
+    (vars.length ? '*Variações:* ' + vars.join(' | ') + '\n' : '') +
+    '*Quantidade:* ' + s.qty + '\n' +
+    '*Valor:* ' + fmt(p.price * s.qty) + '\n\n' +
+    'Podemos finalizar o pedido? 🙏';
+  window.open('https://wa.me/' + ACTIVE_WP.num + '?text=' + encodeURIComponent(msg), '_blank');
+}
+$('whatsLabel').textContent = ACTIVE_WP.label;
+PRODUCTS = FALLBACK_PRODUCTS;
+state = PRODUCTS.map(() => ({color:null, size:null, qty:1}));
+renderFilters();
+render();
+async function loadProducts(){
+  let products = [];
+  const sheetUrl = fixSheetUrl(SHEET_CSV_URL);
+  if(sheetUrl){
+    try{
+      const res = await fetchWithTimeout(sheetUrl, 8000);
+      if(res && res.ok){
+        let text = await res.text();
+        text = text.replace(/^\uFEFF/, '');
+        const rows = parseCSV(text);
+        if(rows.length > 1){
+          products = rows.slice(1).map(rowToProduct)
+            .filter(p => p.title && !looksLikeCode(p.title) && p.price > 0);
+          const ativos = products.filter(p => p.active);
+          const ocultos = products.length - ativos.length;
+          if(ativos.length){
+            setStatus('✅ Planilha conectada: ' + ativos.length + ' produtos ativos' + (ocultos ? ' (' + ocultos + ' inativos ocultos)' : ''), 'ok');
+          } else {
+            setStatus('⚠️ Todos os produtos estão inativos. Marque "sim" na coluna Ativo.', 'warn');
+          }
+          products = ativos;
+        } else {
+          setStatus('⚠️ A planilha parece vazia. Adicione produtos e publique novamente.', 'warn');
+        }
+      } else {
+        setStatus('⚠️ Não consegui acessar a planilha. Verifique se ela está publicada na web.', 'warn');
+      }
+    }catch(e){
+      setStatus('⚠️ Não consegui conectar à planilha. Mostrando produtos de demonstração.', 'warn');
+    }
+  } else {
+    setStatus('ℹ️ Nenhuma planilha configurada — mostrando produtos de demonstração.', '');
+  }
+  if(products.length){
+    PRODUCTS = products;
+    state = PRODUCTS.map(() => ({color:null, size:null, qty:1}));
+    renderFilters();
+    render();
+  }
+}
+loadProducts();
+</script>
+</body>
+</html>
